@@ -3,7 +3,7 @@
 A modern, dark-themed **social media agency landing page** built with pure **HTML, CSS, and vanilla JavaScript**.
 Designed for performance, aesthetics, and conversion-focused UI.
 
-![FeedCraft Preview](preview.png)
+
 
 ---
 
@@ -40,7 +40,7 @@ feedcraft-landing/
 │
 ├── index.html
 ├── README.md
-├── preview.png
+├── 
 └── assets/
     └── feedcraft_logo.png
 ```
@@ -52,13 +52,13 @@ feedcraft-landing/
 1. Clone the repository
 
 ```bash
-git clone https://github.com/yourusername/feedcraft-landing.git
+git clone https://github.com/PrinceJoshi312/FeedCraft-landing.git
 ```
 
 2. Open the project
 
 ```bash
-cd feedcraft-landing
+cd FeedCraft-landing
 ```
 
 3. Run locally
@@ -176,13 +176,7 @@ https://www.instagram.com/_feedcraft_/
 * Animation library
 * SEO optimization
 
----
 
-## 📄 License
-
-MIT License — free to use and modify.
-
----
 
 ## 👤 Author
 
