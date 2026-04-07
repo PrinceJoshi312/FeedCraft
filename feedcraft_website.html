@@ -1,0 +1,396 @@
+
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: var(--font-sans); background: #0a0a0f; color: #fff; }
+
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(10,10,15,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 0.5px solid rgba(255,255,255,0.08);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 2rem; height: 64px;
+  }
+  .nav-logo { display: flex; align-items: center; gap: 10px; }
+  .nav-logo img { height: 48px; width: 48px; object-fit: contain; border-radius: 0; }
+  .nav-logo span { font-size: 20px; font-weight: 500; background: linear-gradient(90deg, #ff5c5c, #c060ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .nav-links { display: flex; align-items: center; gap: 2rem; }
+  .nav-links a { color: rgba(255,255,255,0.6); font-size: 14px; text-decoration: none; transition: color 0.2s; cursor: pointer; }
+  .nav-links a:hover { color: #fff; }
+  .btn-meet {
+    background: linear-gradient(135deg, #ff5c5c, #c060ff);
+    border: none; color: #fff; font-size: 14px; font-weight: 500;
+    padding: 9px 20px; border-radius: 8px; cursor: pointer;
+    text-decoration: none; display: inline-flex; align-items: center; gap: 6px;
+    transition: opacity 0.2s;
+  }
+  .btn-meet:hover { opacity: 0.85; }
+
+  .hero {
+    min-height: 88vh;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding: 4rem 2rem;
+    position: relative; overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0; z-index: 0;
+    background: radial-gradient(ellipse 70% 60% at 50% 40%, rgba(192,96,255,0.12) 0%, transparent 70%),
+                radial-gradient(ellipse 50% 40% at 20% 80%, rgba(255,92,92,0.08) 0%, transparent 60%);
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(255,255,255,0.06); border: 0.5px solid rgba(255,255,255,0.12);
+    border-radius: 20px; padding: 5px 14px; font-size: 12px; color: rgba(255,255,255,0.5);
+    margin-bottom: 1.5rem; z-index: 1;
+  }
+  .hero-badge .dot { width: 6px; height: 6px; border-radius: 50%; background: #4ade80; }
+  .hero h1 { font-size: clamp(2.2rem, 5vw, 3.8rem); font-weight: 500; line-height: 1.15; z-index: 1; max-width: 700px; }
+  .hero h1 em { font-style: normal; background: linear-gradient(90deg, #ff5c5c, #c060ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .hero p { font-size: 1.05rem; color: rgba(255,255,255,0.5); max-width: 520px; margin: 1.25rem auto 2rem; line-height: 1.7; z-index: 1; }
+  .hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; z-index: 1; }
+  .btn-ghost {
+    background: transparent; border: 0.5px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.7);
+    font-size: 14px; padding: 9px 20px; border-radius: 8px; cursor: pointer;
+    text-decoration: none; display: inline-flex; align-items: center; gap: 6px; transition: all 0.2s;
+  }
+  .btn-ghost:hover { border-color: rgba(255,255,255,0.4); color: #fff; }
+
+  .stats {
+    display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap;
+    padding: 2.5rem 2rem;
+    border-top: 0.5px solid rgba(255,255,255,0.06);
+    border-bottom: 0.5px solid rgba(255,255,255,0.06);
+  }
+  .stat { text-align: center; }
+  .stat-num { font-size: 2rem; font-weight: 500; background: linear-gradient(90deg, #ff5c5c, #c060ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .stat-lbl { font-size: 12px; color: rgba(255,255,255,0.4); margin-top: 2px; }
+
+  .section { padding: 5rem 2rem; max-width: 1100px; margin: 0 auto; }
+  .section-tag { font-size: 11px; text-transform: uppercase; letter-spacing: 2px; color: rgba(255,255,255,0.3); margin-bottom: 0.75rem; }
+  .section-title { font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 500; margin-bottom: 0.75rem; }
+  .section-sub { color: rgba(255,255,255,0.45); font-size: 1rem; line-height: 1.7; max-width: 520px; }
+
+  .services-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px; margin-top: 3rem;
+  }
+  .svc-card {
+    background: rgba(255,255,255,0.03); border: 0.5px solid rgba(255,255,255,0.07);
+    border-radius: 16px; padding: 1.75rem; cursor: default;
+    transition: border-color 0.25s, background 0.25s;
+  }
+  .svc-card:hover { border-color: rgba(192,96,255,0.35); background: rgba(192,96,255,0.04); }
+  .svc-icon {
+    width: 44px; height: 44px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; margin-bottom: 1rem;
+  }
+  .svc-card h3 { font-size: 16px; font-weight: 500; margin-bottom: 0.5rem; }
+  .svc-card p { font-size: 13px; color: rgba(255,255,255,0.45); line-height: 1.6; }
+  .svc-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 1rem; }
+  .tag { font-size: 11px; padding: 3px 10px; border-radius: 20px; background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.5); }
+
+  .process-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0; margin-top: 3rem; }
+  .step { padding: 1.5rem; border-right: 0.5px solid rgba(255,255,255,0.06); }
+  .step:last-child { border-right: none; }
+  .step-num { font-size: 12px; color: rgba(255,255,255,0.25); margin-bottom: 1rem; }
+  .step h4 { font-size: 15px; font-weight: 500; margin-bottom: 0.4rem; }
+  .step p { font-size: 13px; color: rgba(255,255,255,0.4); line-height: 1.6; }
+
+  .platforms-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 2.5rem; }
+  .platform-pill {
+    display: flex; align-items: center; gap: 8px;
+    background: rgba(255,255,255,0.04); border: 0.5px solid rgba(255,255,255,0.08);
+    border-radius: 40px; padding: 8px 16px; font-size: 13px; color: rgba(255,255,255,0.6);
+  }
+  .platform-pill .pip { width: 8px; height: 8px; border-radius: 50%; }
+
+  .cta-box {
+    background: rgba(255,255,255,0.03); border: 0.5px solid rgba(255,255,255,0.08);
+    border-radius: 20px; padding: 3.5rem 2.5rem; text-align: center; margin: 5rem 2rem;
+    max-width: 700px; margin-left: auto; margin-right: auto;
+  }
+  .cta-box h2 { font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 500; margin-bottom: 0.75rem; }
+  .cta-box p { color: rgba(255,255,255,0.45); margin-bottom: 2rem; }
+
+  .footer {
+    border-top: 0.5px solid rgba(255,255,255,0.06);
+    padding: 2rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+  }
+  .footer-brand { display: flex; align-items: center; gap: 10px; }
+  .footer-brand span { font-size: 15px; font-weight: 500; background: linear-gradient(90deg, #ff5c5c, #c060ff); -webkit-background-clip: text; }
+  .footer-links { display: flex; gap: 20px; }
+  .footer-links a { color: rgba(255,255,255,0.35); font-size: 13px; text-decoration: none; }
+  .footer-links a:hover { color: rgba(255,255,255,0.6); }
+  .footer-right { font-size: 12px; color: rgba(255,255,255,0.25); }
+
+  .modal-overlay {
+    display: none; position: fixed; inset: 0; z-index: 999;
+    background: rgba(0,0,0,0.75); align-items: center; justify-content: center;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: #13131a; border: 0.5px solid rgba(255,255,255,0.1);
+    border-radius: 20px; padding: 2.5rem; width: 100%; max-width: 460px; position: relative;
+  }
+  .modal h3 { font-size: 20px; font-weight: 500; margin-bottom: 0.4rem; }
+  .modal p { color: rgba(255,255,255,0.45); font-size: 14px; margin-bottom: 1.75rem; }
+  .modal label { font-size: 13px; color: rgba(255,255,255,0.5); display: block; margin-bottom: 5px; }
+  .modal input, .modal select, .modal textarea {
+    width: 100%; background: rgba(255,255,255,0.05); border: 0.5px solid rgba(255,255,255,0.1);
+    border-radius: 8px; color: #fff; font-size: 14px; padding: 10px 14px; margin-bottom: 14px; outline: none;
+    font-family: var(--font-sans);
+  }
+  .modal input:focus, .modal select:focus, .modal textarea:focus { border-color: rgba(192,96,255,0.5); }
+  .modal select option { background: #13131a; }
+  .modal-close {
+    position: absolute; top: 16px; right: 18px; background: none; border: none;
+    color: rgba(255,255,255,0.4); font-size: 20px; cursor: pointer; line-height: 1;
+  }
+  .toast {
+    position: fixed; bottom: 24px; right: 24px; background: #1c1c26;
+    border: 0.5px solid rgba(255,255,255,0.1); border-radius: 12px;
+    padding: 14px 20px; font-size: 14px; color: #fff; z-index: 9999;
+    display: none; align-items: center; gap: 8px;
+  }
+  .toast.show { display: flex; }
+</style>
+
+<div style="background:#0a0a0f; min-height: 100vh;">
+
+<nav class="nav">
+  <div class="nav-logo">
+    <img id="logoImg" src="feedcraft_logo_white-removebg-preview.png" alt="FeedCraft" />
+    <span>Feedcraft</span>
+  </div>
+  <div class="nav-links">
+    <a onclick="scrollTo('services')" href="#services">Services</a>
+    <a onclick="scrollTo('process')">Process</a>
+    <a onclick="scrollTo('platforms')">Platforms</a>
+    <a onclick="window.open('https://www.instagram.com/_feedcraft_/', '_blank')">Instagram ↗</a>
+
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-badge"><span class="dot"></span> Social Media Agency · India</div>
+  <h1>We craft feeds that <em>stop the scroll</em></h1>
+  <p>FeedCraft builds scroll-stopping content, data-driven strategies, and engaged communities for brands that want to grow on social.</p>
+  <div class="hero-ctas">
+    <!-- <button class="btn-meet" onclick="openModal()">Schedule a Meeting →</button> -->
+    <a class="btn-ghost" href="https://www.instagram.com/_feedcraft_/" target="_blank">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor"/></svg>
+      Contact on Instagram
+    </a>
+  </div>
+</section>
+
+<div class="stats">
+  <!-- <div class="stat"><div class="stat-num">200+</div><div class="stat-lbl">Brands Grown</div></div> -->
+  <div class="stat"><div class="stat-num">50K</div><div class="stat-lbl">Impressions Delivered</div></div>
+  <div class="stat"><div class="stat-num">3.2x</div><div class="stat-lbl">Avg. Engagement Lift</div></div>
+  <div class="stat"><div class="stat-num">98%</div><div class="stat-lbl">Client Retention</div></div>
+</div>
+
+<div id="services" class="section">
+  <div class="section-tag">What we do</div>
+  <div class="section-title">Full-stack social media services</div>
+  <div class="section-sub">From strategy to execution — everything your brand needs to dominate every platform.</div>
+
+  <div class="services-grid">
+    <div class="svc-card">
+      <div class="svc-icon" style="background:rgba(255,92,92,0.12);">📱</div>
+      <h3>Content Creation</h3>
+      <p>Scroll-stopping reels, carousels, stories, and static posts tailored to your brand voice and platform algorithm.</p>
+      <div class="svc-tags"><span class="tag">Reels</span><span class="tag">Carousels</span><span class="tag">Stories</span><span class="tag">UGC</span></div>
+    </div>
+    <div class="svc-card">
+      <div class="svc-icon" style="background:rgba(192,96,255,0.12);">📊</div>
+      <h3>Social Media Strategy</h3>
+      <p>Data-backed roadmaps built around your goals — audience growth, brand awareness, or direct conversion.</p>
+      <div class="svc-tags"><span class="tag">Audit</span><span class="tag">Roadmap</span><span class="tag">KPIs</span></div>
+    </div>
+    <div class="svc-card">
+      <div class="svc-icon" style="background:rgba(96,192,255,0.12);">🎯</div>
+      <h3>Paid Social Advertising</h3>
+      <p>ROI-focused ad campaigns across Meta, Instagram, and more — every rupee tracked and optimized.</p>
+      <div class="svc-tags"><span class="tag">Meta Ads</span><span class="tag">Retargeting</span><span class="tag">A/B Testing</span></div>
+    </div>
+    <div class="svc-card">
+      <div class="svc-icon" style="background:rgba(255,200,96,0.12);">✍️</div>
+      <h3>Copywriting & Captions</h3>
+      <p>Brand-voice copy that hooks, informs, and converts — from captions to ad copies and bios.</p>
+      <div class="svc-tags"><span class="tag">Captions</span><span class="tag">Hooks</span><span class="tag">CTAs</span></div>
+    </div>
+    <div class="svc-card">
+      <div class="svc-icon" style="background:rgba(96,255,160,0.10);">📈</div>
+      <h3>Analytics & Reporting</h3>
+      <p>Monthly deep-dive reports with insights on reach, engagement, follower growth, and what to do next.</p>
+      <div class="svc-tags"><span class="tag">Monthly Reports</span><span class="tag">Insights</span><span class="tag">Growth Tracking</span></div>
+    </div>
+    <div class="svc-card">
+      <div class="svc-icon" style="background:rgba(255,92,160,0.12);">🤝</div>
+      <h3>Influencer Marketing</h3>
+      <p>End-to-end influencer collaborations — from creator discovery and outreach to campaign execution and results.</p>
+      <div class="svc-tags"><span class="tag">Micro-Influencers</span><span class="tag">Outreach</span><span class="tag">Collab</span></div>
+    </div>
+    <div class="svc-card">
+      <div class="svc-icon" style="background:rgba(255,150,92,0.12);">🧠</div>
+      <h3>Community Management</h3>
+      <p>Real-time DMs, comment replies, and reputation management that keeps your audience loyal and engaged.</p>
+      <div class="svc-tags"><span class="tag">DMs</span><span class="tag">Comments</span><span class="tag">Reputation</span></div>
+    </div>
+    <div class="svc-card">
+      <div class="svc-icon" style="background:rgba(92,180,255,0.12);">🎨</div>
+      <h3>Brand Identity for Social</h3>
+      <p>Consistent visual language — color palettes, templates, highlight covers, and profile aesthetics that make you unmistakable.</p>
+      <div class="svc-tags"><span class="tag">Templates</span><span class="tag">Branding</span><span class="tag">Aesthetics</span></div>
+    </div>
+  </div>
+</div>
+
+<div id="process" style="background: rgba(255,255,255,0.02); border-top: 0.5px solid rgba(255,255,255,0.05); border-bottom: 0.5px solid rgba(255,255,255,0.05);">
+  <div class="section">
+    <div class="section-tag">How it works</div>
+    <div class="section-title">Our process</div>
+    <div class="process-steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <h4>Discovery Call</h4>
+        <p>We learn your brand, audience, goals, and competitors inside out.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <h4>Strategy Blueprint</h4>
+        <p>A custom 90-day strategy document — platforms, content pillars, posting cadence.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <h4>Content Production</h4>
+        <p>Creative team designs and produces a full month of content, ready for review.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <h4>Publish & Optimize</h4>
+        <p>We publish, monitor, and continuously optimize based on real performance data.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="platforms" class="section">
+  <div class="section-tag">Platforms we manage</div>
+  <div class="section-title">We grow you everywhere</div>
+  <div class="section-sub">All the platforms where your audience already lives.</div>
+  <div class="platforms-row">
+    <div class="platform-pill"><span class="pip" style="background:#E1306C;"></span>Instagram</div>
+    <div class="platform-pill"><span class="pip" style="background:#1877F2;"></span>Facebook</div>
+    <div class="platform-pill"><span class="pip" style="background:#000;"></span>X / Twitter</div>
+    <div class="platform-pill"><span class="pip" style="background:#FF0000;"></span>YouTube</div>
+    <div class="platform-pill"><span class="pip" style="background:#010101;"></span>TikTok</div>
+    <div class="platform-pill"><span class="pip" style="background:#0A66C2;"></span>LinkedIn</div>
+    <div class="platform-pill"><span class="pip" style="background:#BD081C;"></span>Pinterest</div>
+    <div class="platform-pill"><span class="pip" style="background:#25D366;"></span>WhatsApp Channel</div>
+  </div>
+</div>
+
+<div class="cta-box">
+  <h2>Ready to craft your perfect feed?</h2>
+  <p>Let's talk about where your brand is and where it could be. Book a free 30-min strategy call.</p>
+  <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
+    <button class="btn-meet" onclick="openModal()">Book a Free Strategy Call →</button>
+    <a class="btn-ghost" href="https://www.instagram.com/_feedcraft_/" target="_blank">View Our Work on Instagram ↗</a>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-brand">
+    <img id="footerLogo" src="feedcraft_logo_white-removebg-preview.png" alt="" style="height:38px; width:38px; object-fit:contain; background:transparent; border-radius:0; filter:brightness(1.15) contrast(1.1) saturate(1.2);"/>
+    <span>Feedcraft</span>
+  </div>
+  <div class="footer-links">
+    <a onclick="scrollTo('services')">Services</a>
+    <a href="https://www.instagram.com/_feedcraft_/" target="_blank">Instagram</a>
+    <a onclick="openModal()">Contact</a>
+  </div>
+  <div class="footer-right">© 2025 FeedCraft. All rights reserved.</div>
+</footer>
+
+</div>
+
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModalDirect()">✕</button>
+    <h3>Schedule a Meeting</h3>
+    <p>Book a free 30-min strategy call with our team.</p>
+    <label>Your Name</label>
+    <input type="text" placeholder="Prince Sharma" id="mName"/>
+    <label>Email Address</label>
+    <input type="email" placeholder="you@example.com" id="mEmail"/>
+    <label>Phone Number</label>
+    <input type="tel" placeholder="+91 XXXXX XXXXX" id="mPhone"/>
+    <label>Service Interested In</label>
+    <select id="mService">
+      <option>Content Creation</option>
+      <option>Paid Advertising</option>
+      <option>Full Social Management</option>
+      <option>Strategy Consultation</option>
+      <option>Influencer Marketing</option>
+      <option>Other</option>
+    </select>
+    <label>Preferred Time Slot</label>
+    <select id="mSlot">
+      <option>Morning (9 AM – 12 PM)</option>
+      <option>Afternoon (12 PM – 4 PM)</option>
+      <option>Evening (4 PM – 7 PM)</option>
+    </select>
+    <button class="btn-meet" style="width:100%;justify-content:center;margin-top:4px;" onclick="submitForm()">Confirm Booking →</button>
+  </div>
+</div>
+
+<div class="toast" id="toast">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+  Meeting request sent! We'll be in touch soon.
+</div>
+
+<script>
+  const logoBase = "/mnt/user-data/uploads/feedcraft_logo.png";
+  function toDataURL(src, callback) {
+    const img = new Image(); img.crossOrigin = "Anonymous";
+    img.onload = function() {
+      const c = document.createElement("canvas");
+      c.width = img.width; c.height = img.height;
+      c.getContext("2d").drawImage(img, 0, 0);
+      callback(c.toDataURL());
+    };
+    img.onerror = () => callback(null);
+    img.src = src;
+  }
+
+  function scrollTo(id) {
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+  }
+
+  function openModal() {
+    document.getElementById("modalOverlay").classList.add("open");
+  }
+  function closeModal(e) {
+    if (e.target === document.getElementById("modalOverlay")) closeModalDirect();
+  }
+  function closeModalDirect() {
+    document.getElementById("modalOverlay").classList.remove("open");
+  }
+  function submitForm() {
+    const name = document.getElementById("mName").value;
+    if (!name.trim()) { alert("Please enter your name."); return; }
+    closeModalDirect();
+    const t = document.getElementById("toast");
+    t.classList.add("show");
+    setTimeout(() => t.classList.remove("show"), 3800);
+  }
+
+  const uploadedLogoPath = "/mnt/user-data/uploads/feedcraft_logo.png";
+  document.getElementById("logoImg").src = uploadedLogoPath;
+  document.getElementById("footerLogo").src = uploadedLogoPath;
+</script>
