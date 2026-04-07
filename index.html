@@ -160,8 +160,8 @@
 
 <nav class="nav">
   <div class="nav-logo">
-    <img id="logoImg" src="/images/feedcraft_logo.png" alt="FeedCraft" />
-    <span>Feedcraft</span>
+   <img id="logoImg" src="/images/feedcraft_logo.png" alt="FeedCraft" />   
+   <span>Feedcraft</span>
   </div>
   <div class="nav-links">
     <a onclick="scrollTo('services')" href="#services">Services</a>
@@ -306,7 +306,7 @@
 
 <footer class="footer">
   <div class="footer-brand">
-    <img id="footerLogo" src="/images/feedcraft_logo.png" alt="" style="height:38px; width:38px; object-fit:contain; background:transparent; border-radius:0; filter:brightness(1.15) contrast(1.1) saturate(1.2);"/>
+    <img id="footerLogo" src="/images/feedcraft_logo.png" alt="" style="height:38px; width:38px; object-fit:contain; background:transparent; border-radius:0; filter:brightness(1.15) contrast(1.1) saturate(1.2);"/> 
     <span>Feedcraft</span>
   </div>
   <div class="footer-links">
@@ -355,18 +355,6 @@
 </div>
 
 <script>
-  const logoBase = "/mnt/user-data/uploads/feedcraft_logo.png";
-  function toDataURL(src, callback) {
-    const img = new Image(); img.crossOrigin = "Anonymous";
-    img.onload = function() {
-      const c = document.createElement("canvas");
-      c.width = img.width; c.height = img.height;
-      c.getContext("2d").drawImage(img, 0, 0);
-      callback(c.toDataURL());
-    };
-    img.onerror = () => callback(null);
-    img.src = src;
-  }
 
   function scrollTo(id) {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
@@ -390,7 +378,5 @@
     setTimeout(() => t.classList.remove("show"), 3800);
   }
 
-  const uploadedLogoPath = "/mnt/user-data/uploads/feedcraft_logo.png";
-  document.getElementById("logoImg").src = uploadedLogoPath;
-  document.getElementById("footerLogo").src = uploadedLogoPath;
+  
 </script>
